@@ -10,21 +10,21 @@ var articles = {
 		title: 'Joke One!',
 		heading: 'Joke One on One',
 		date: 'Mag 214, -313',
-		content: 'Never put off until tomorrow what you can avoid altogether.',
+		content: '<P>Never put off until tomorrow what you can avoid altogether.',
 		picture: '/ui/D_JargonWally2.gif'
 	},
 	'article-two': {
 		title: 'Joke Two!',
 		heading: 'Joke Two on One',
 		date: 'Mag 428, -626',
-		content: 'The light at the end of the tunnel has been turned off due to budget cuts.',
+		content: '<P>The light at the end of the tunnel has been turned off due to budget cuts.',
 		picture: '/ui/D_Instructions.gif'
 	},
 	'article-three': {
 		title: 'Joke Three!',
 		heading: 'Joke Three on One',
 		date: 'Mag 642, -939',
-		content: 'The light at the end of the tunnel has been turned off due to budget cuts.',
+		content: '<P>The light at the end of the tunnel has been turned off due to budget cuts.',
 		picture: '/ui/D_IITHumility.gif'
 	}
 };
@@ -46,10 +46,10 @@ function createTemplate(data) {
 		<body>
 			<div class="container">
 				<div>
-					<a href="/">Home</a>&tab;
-					<a href="/article-one>Article One</a>&tab;
-					<a href="/article-two>Article Two</a>&tab;
-					<a href="/article-two>Article Three</a>
+					<a href="/">Home</a>&#09;
+					<a href="/article-one">Article One</a>&#09;
+					<a href="/article-two">Article Two</a>&#09;
+					<a href="/article-three">Article Three</a>
 				</div>
 				<hr/>
 				<h3>
