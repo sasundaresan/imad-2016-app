@@ -10,21 +10,24 @@ var articles = {
 		title: 'Joke One!',
 		heading: 'Joke One on One',
 		date: 'Mag 214, -313',
-		content: '<P>Never put off until tomorrow what you can avoid altogether.',
+		content: `<P>Never put off until tomorrow what you can avoid altogether.
+		<P>An answering machine message "The number you have dialed is imaginary. Please rotate your phone 90 degrees and try again."`,
 		picture: '/ui/D_JargonWally2.gif'
 	},
 	'article-two': {
 		title: 'Joke Two!',
 		heading: 'Joke Two on One',
 		date: 'Mag 428, -626',
-		content: '<P>The light at the end of the tunnel has been turned off due to budget cuts.',
+		content: `<P>The light at the end of the tunnel has been turned off due to budget cuts.
+		<P>Q: What caused the big bang?<BR>A: God divided by zero. Oops!`,
 		picture: '/ui/D_Instructions.gif'
 	},
 	'article-three': {
 		title: 'Joke Three!',
 		heading: 'Joke Three on One',
 		date: 'Mag 642, -939',
-		content: '<P>The light at the end of the tunnel has been turned off due to budget cuts.',
+		content: `<P>Pride, commitment, teamwork - words we use to get you to work for free.
+		<P>"As long as algebra is taught in school, there will be prayer in school." <BR>- Cokie Roberts`,
 		picture: '/ui/D_IITHumility.gif'
 	}
 };
