@@ -54,11 +54,11 @@ function changeText() {
 	}
 	else if (orig) {
 		doc.innerHTML = "<P>This is a different cartoon! (Count=" + count + ")</P>";
-		cart.src = "/ui/D_IITHumility.gif";
+		cart.src = '/ui/D_IITHumility.gif';
 	}
 	else {
 		doc.innerHTML = "<P>And this is the another cartoon! (Count=" + count + ")</P>";
-		cart.src = "/ui/D_JargonWally2.gif";
+		cart.src = '/ui/D_JargonWally2.gif';
 		count++;
 	}
 	orig = !orig;
