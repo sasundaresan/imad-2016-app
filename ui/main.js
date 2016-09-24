@@ -29,7 +29,7 @@ var img = document.getElementById('pict');
 img.onclick = function() {
 	right = !right;
 	interv = setInterval(moveRight, 50);
-}
+};
 
 // This keeps flipping the text (element main_text) when clicked 10 times
 var doc = document.getElementById('main_text');
@@ -54,4 +54,4 @@ function changeText() {
 doc.onclick = function() {
 	count = 0;
 	sirv = setInterval(changeText, 2000);
-}
+};
