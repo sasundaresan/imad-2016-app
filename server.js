@@ -104,7 +104,7 @@ app.get('/ui/RKL07.png', function (req, res) {
 
 app.get('/ui/:fileName', function (req, res) {
 	var fileName = req.params.fileName;
-  res.sendFile(path.join(__dirname, 'ui', fileName));
+    res.sendFile(path.join(__dirname, 'ui', fileName));
 });
 
 
