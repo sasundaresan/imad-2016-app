@@ -47,14 +47,15 @@ var count;
 function changeText() {
 	if (count > 10) {
 		clearInterval(sirv);
+		doc.innerHTML = "<P>Hi! Do you want a different cartoon? Click me!</P>";
 		swtch = false;
 	}
-	if (orig) {
-		doc.innerHTML = "<P>This is original text! (Count=" + count + ")</P>";
+	else if (orig) {
+		doc.innerHTML = "<P>This is a different cartoon! (Count=" + count + ")</P>";
 	}
 	else {
 		count++;
-		doc.innerHTML = "<P>This is changed text! (Count=" + count + ")</P>";
+		doc.innerHTML = "<P>And this is the original cartoon! (Count=" + count + ")</P>";
 	}
 	orig = !orig;
 }
