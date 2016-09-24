@@ -67,3 +67,19 @@ doc.onclick = function() {
 	    swtch = true;
     }
 };
+
+var countBtn = document.getElementById('countBtn');
+countBtn.onclick = function() {
+    var request = new XMLHttpRequest();
+    request.onreadystatechange = function() {
+        if (request.readyState === XMLHttpRequest.DONE) {
+            if (request.status === 200) { // 200 => successful
+                var span = document.getElementById('countBtnNo');
+                var countBtnNo = request.responseText;
+                span.innerHTML = countBtnNo.toString();
+            }
+        }
+    };
+    request.open('GET', "http://sasundaresan.imad.hasura-app.io/counter");
+    request.send();
+};
