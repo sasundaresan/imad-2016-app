@@ -67,7 +67,7 @@ function changeText() {
 doc.onclick = function() {
     if (!swtch) {
 	    count = 1;
-	    sirv = setInterval(changeText, 2000);
+	    sirv = setInterval(changeText, 5000);
 	    swtch = true;
     }
 };
