@@ -87,3 +87,25 @@ countBtn.onclick = function() {
     request.open('GET', "http://sasundaresan.imad.hasura-app.io/counter");
     request.send();
 };
+
+var submitBtn = document.getElementById('submitBtn');
+var commentInput = document.getElementById('comment');
+submitBtn.onclick = function() {
+    var request = new XMLHttpRequest();
+    request.onreadystatechange = function() {
+        if (request.readyState === XMLHttpRequest.DONE) {
+            if (request.status === 200) { // 200 => successful
+                var commentList = document.getElementById('commentList');
+                var comments = request.responseText;
+                comments = JSON.parse(comments);
+                var listHtml = '';
+                for (var ix=0; ix<comments.length; ix++) {
+                    listHtml += '<li>' + comments[ix] + '</li>';
+                }
+                commentList.innerHTML = listHtml;
+            }
+        }
+    };
+    request.open('GET', "http://sasundaresan.imad.hasura-app.io/submit-comment?comment=" + commentInput.value);
+    request.send();
+};
