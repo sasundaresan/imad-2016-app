@@ -39,6 +39,7 @@ img.onclick = function() {
 
 // This keeps flipping the text (element main_text) when clicked 5 times
 var doc = document.getElementById('main_text');
+var cart = document.getElementById('cartoon');
 var orig = true;
 var swtch = false;
 var sirv;
@@ -48,13 +49,16 @@ function changeText() {
 	if (count > 5) {
 		clearInterval(sirv);
 		doc.innerHTML = "<P>Hi! Do you want a different cartoon? Click me!</P>";
+		cart.src = "/ui/D_Instructions.gif";
 		swtch = false;
 	}
 	else if (orig) {
 		doc.innerHTML = "<P>This is a different cartoon! (Count=" + count + ")</P>";
+		cart.src = "/ui/D_IITHumility.gif";
 	}
 	else {
-		doc.innerHTML = "<P>And this is the original cartoon! (Count=" + count + ")</P>";
+		doc.innerHTML = "<P>And this is the another cartoon! (Count=" + count + ")</P>";
+		cart.src = "/ui/D_JargonWally2.gif";
 		count++;
 	}
 	orig = !orig;
