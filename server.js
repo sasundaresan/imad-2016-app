@@ -85,6 +85,12 @@ app.get('/counter', function(req, res) {
     res.send(countBtnNo.toString());
 });
 
+var commentsList=[];
+app.get('/submit-comment', function(req, res) {
+    commentsList.push(req.query.comment);
+    res.send(JSON.stringify(commentsList));
+});
+
 app.get('/:articleName', function(req, res) {
 	var articleName = req.params.articleName;
 	res.send(createTemplate(articles[articleName]));
