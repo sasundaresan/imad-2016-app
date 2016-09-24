@@ -54,15 +54,15 @@ function changeText() {
 		doc.innerHTML = "<P>This is a different cartoon! (Count=" + count + ")</P>";
 	}
 	else {
-		count++;
 		doc.innerHTML = "<P>And this is the original cartoon! (Count=" + count + ")</P>";
+		count++;
 	}
 	orig = !orig;
 }
 
 doc.onclick = function() {
     if (!swtch) {
-	    count = 0;
+	    count = 1;
 	    sirv = setInterval(changeText, 2000);
 	    swtch = true;
     }
