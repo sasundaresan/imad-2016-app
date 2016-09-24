@@ -5,18 +5,21 @@ console.log('Loaded!');
 var marginLeft = 0;
 var right = false;
 var interv;
+var mov=false;
 function moveRight() {
 	if (right) {
-		if (marginLeft >= 150) {
+		if (marginLeft >= 450) {
 			clearInterval(interv);
+			mov = false;
 		}
 		else {
 			marginLeft += 2;
 		}
 	}
 	else {
-		if (marginLeft <= 0) {
+		if (marginLeft <= -450) {
 			clearInterval(interv);
+			mov = false;
 		}
 		else {
 			marginLeft -= 2;
@@ -27,19 +30,24 @@ function moveRight() {
 
 var img = document.getElementById('pict');
 img.onclick = function() {
-	right = !right;
-	interv = setInterval(moveRight, 50);
+    if (!mov) {
+	    right = !right;
+	    interv = setInterval(moveRight, 50);
+	    mov = true;
+    }
 };
 
 // This keeps flipping the text (element main_text) when clicked 10 times
 var doc = document.getElementById('main_text');
 var orig = true;
+var swtch = false;
 var sirv;
 var count;
 
 function changeText() {
 	if (count > 10) {
 		clearInterval(sirv);
+		swtch = false;
 	}
 	if (orig) {
 		doc.innerHTML = "<P>This is original text! (Count=" + count + ")</P>";
@@ -52,6 +60,9 @@ function changeText() {
 }
 
 doc.onclick = function() {
-	count = 0;
-	sirv = setInterval(changeText, 2000);
+    if (!swtch) {
+	    count = 0;
+	    sirv = setInterval(changeText, 2000);
+	    swtch = true;
+    }
 };
