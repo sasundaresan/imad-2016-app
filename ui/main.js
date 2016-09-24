@@ -37,7 +37,7 @@ img.onclick = function() {
     }
 };
 
-// This keeps flipping the text (element main_text) when clicked 10 times
+// This keeps flipping the text (element main_text) when clicked 5 times
 var doc = document.getElementById('main_text');
 var orig = true;
 var swtch = false;
@@ -45,7 +45,7 @@ var sirv;
 var count;
 
 function changeText() {
-	if (count > 10) {
+	if (count > 5) {
 		clearInterval(sirv);
 		doc.innerHTML = "<P>Hi! Do you want a different cartoon? Click me!</P>";
 		swtch = false;
