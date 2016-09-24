@@ -30,8 +30,8 @@ function moveRight() {
 
 var img = document.getElementById('pict');
 img.onclick = function() {
+	right = !right;
     if (!mov) {
-	    right = !right;
 	    interv = setInterval(moveRight, 50);
 	    mov = true;
     }
