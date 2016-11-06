@@ -98,7 +98,7 @@ function myHashString(input, salt) {
 	// use crypto's function to hash
 	var hashed = Crypto.pbkdf2Sync(input, salt, 10000, 512, 'sha512');
 	// hashed will be bytes - convert it to string.
-	return hashed.toString('hex');
+	return ['pbkdf2', '10000', salt, hashed.toString('hex')].join('$');
 }
 
 app.get('/hash/:input', function(req, res) {
