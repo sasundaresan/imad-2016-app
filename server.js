@@ -20,7 +20,7 @@ var articles = {
 	'article-one': {
 		title: 'Joke One!',
 		heading: 'Joke One on One',
-		articledate: Date(2011,10,5),
+		articledate: '2010-10-05',
 		content: `<P>Never put off until tomorrow what you can avoid altogether.
 		<P>An answering machine message "The number you have dialed is imaginary. Please rotate your phone 90 degrees and try again."`,
 		picture: '/ui/D_JargonWally2.gif'
