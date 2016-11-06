@@ -5,6 +5,10 @@ var path = require('path');
 var Pool = require('pg').Pool;
 // For cryptography - node.js - crypto lib
 var Crypto = require('crypto');
+// For parsing JSON objects
+var bodyParser = require('body-parser');
+// Session - cookies!
+var session = require('express-session');
 
 var config = {
 	user: 'sasundaresan',
@@ -18,6 +22,11 @@ var pool = new Pool(config);
 
 var app = express();
 app.use(morgan('combined'));
+app.use(bodyParser.json());
+app.use(session({
+	secret: 'SomeRandomSecretValue',
+	cookie: {maxAge: 1000*60*60}
+}));
 
 var articles = {
 	'article-one': {
@@ -107,9 +116,10 @@ app.get('/hash/:input', function(req, res) {
 });
 
 app.post('/create-user', function(req, res) {
+	// will use the body parser to get these from a JSON object
 	var username = req.body.username;
 	var passwd = req.body.passwd;
-	var salt = Crypto.getRandomBytes(128).toString('hex');
+	var salt = Crypto.randomBytes(128).toString('hex');
 	var dbString = myHashString(passwd, salt);
 	pool.query('INSERT INTO "my_users" (username, passwd) VALUES $1, $2', [username, dbString], function(err, res) {
 		if (err) {
@@ -120,6 +130,48 @@ app.post('/create-user', function(req, res) {
 		}
 	});
 });
+
+app.post('/login', function(req, res) {
+	// use the body parser to get the username
+	var username = req.body.username;
+	var passwd = req.body.passwd;
+	pool.query('SELECT FROM "my_users" WHERE username = $1', [username], function(err, res) {
+		if (err) {
+			res.status(403).send('User name / password is wrong!');
+		} else {
+			if (res.rows.length === 0) {
+				res.status(403).send('User name / password is wrong!');
+			} else {
+				var dbString = result.rows[0].passwd;
+				var salt = dbString.split('$')[2];
+				var hashedPwd = myHashString(passwd, salt);
+				if (hashedPwd === dbString) {
+					// Set the session
+					req.session.auth = {userId: result.rows[0].id};
+					// Set cookie with a session ID - internally on the server
+					// side, it maps the session id to an object
+					// {auth: {userId} }
+					res.send('Credentials correct!');
+				} else {
+					res.status(403).send('User name / password is wrong!');
+				}
+			}
+		}
+	});
+});
+
+app.get('/check-login', function(req, res) {
+	if (req.session && req.session.auth && req.session.auth.userId) {
+		res.send('You are logged in: ' + req.session.auth.userId.toString());
+	} else {
+		res.send('You are not logged in!');
+	}
+});
+
+app.get('/logout', function(req, res) {
+	delete req.session.auth;
+	res.send('You are logged out!');
+}
 
 var countBtnNo=0;
 app.get('/counter', function(req, res) {

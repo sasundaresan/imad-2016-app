@@ -109,3 +109,30 @@ submitBtn.onclick = function() {
     request.open('GET', "http://sasundaresan.imad.hasura-app.io/submit-comment?comment=" + commentInput.value);
     request.send();
 };
+
+var upsubmitBtn = document.getElementById('upsubmit_btn');
+upsubmitBtn.onclick = function() {
+    var request = new XMLHttpRequest();
+    request.onreadystatechange = function() {
+        if (request.readyState === XMLHttpRequest.DONE) {
+            if (request.status === 200) { // 200 => successful
+                console.log("User logged in");
+				alert("Log in successful");
+            } else if (request.status === 403) {
+				console.log("authentication failure");
+				alert("user name / password wrong!");
+            } else if (request.status === 500) {
+				console.log("some error at server");
+				alert("unknown error - no login");
+			}
+        }
+    };
+	var username = document.getElementById('username').value;
+	var passwd = document.getElementById('passwd').value;
+	// just for debugging purposes
+	console.log(username);
+	console.log(passwd);
+    request.open('POST', "http://sasundaresan.imad.hasura-app.io/login", true);
+	request.setRequestHeader('Content-Type', 'application/json');
+    request.send(JSON.stringify({username: username, passwd: passwd}));
+};
