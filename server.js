@@ -1,6 +1,15 @@
 var express = require('express');
 var morgan = require('morgan');
 var path = require('path');
+var Pool = require('pg').Pool;
+
+var config = {
+	user: 'sasundaresan',
+	database: 'sasundaresan',
+	host: 'db.imad.hasura-app.io',
+	port: '5432',
+	password: process.env.DB_PASSWORD
+};
 
 var app = express();
 app.use(morgan('combined'));
@@ -9,7 +18,7 @@ var articles = {
 	'article-one': {
 		title: 'Joke One!',
 		heading: 'Joke One on One',
-		date: 'Mag 214, -313',
+		articledate: '2016-10-10',
 		content: `<P>Never put off until tomorrow what you can avoid altogether.
 		<P>An answering machine message "The number you have dialed is imaginary. Please rotate your phone 90 degrees and try again."`,
 		picture: '/ui/D_JargonWally2.gif'
@@ -17,7 +26,7 @@ var articles = {
 	'article-two': {
 		title: 'Joke Two!',
 		heading: 'Joke Two on One',
-		date: 'Mag 428, -626',
+		articledate: '2016-12-12',
 		content: `<P>The light at the end of the tunnel has been turned off due to budget cuts.
 		<P>Q: What caused the big bang?<BR>A: God divided by zero. Oops!`,
 		picture: '/ui/D_Instructions.gif'
@@ -25,7 +34,7 @@ var articles = {
 	'article-three': {
 		title: 'Joke Three!',
 		heading: 'Joke Three on One',
-		date: 'Mag 642, -939',
+		articledate: '2008-08-13',
 		content: `<P>Pride, commitment, teamwork - words we use to get you to work for free.
 		<P>"As long as algebra is taught in school, there will be prayer in school." <BR>- Cokie Roberts`,
 		picture: '/ui/D_IITHumility.gif'
@@ -35,7 +44,7 @@ var articles = {
 function createTemplate(data) {
 	var title=data.title;
 	var heading = data.heading;
-	var date = data.date;
+	var date = data.articledate;
 	var pic = data.picture;
 	var content = data.content;
 	var htmlTemplate = `
@@ -59,7 +68,7 @@ function createTemplate(data) {
 					${heading}
 				</h3>
 				<div>
-					${date}
+					${date.toDateString()}
 				</div>
 				<div class="center">
 					<img src=${pic} class="img-medium"/>
@@ -89,6 +98,21 @@ var commentsList=[];
 app.get('/submit-comment', function(req, res) {
     commentsList.push(req.query.comment);
     res.send(JSON.stringify(commentsList));
+});
+
+app.get('/jokes/:articleName', function(req, res) {
+	Pool.query("SELECT * FROM my_articles WHERE title = $1", [req.params.articleName], function(err, result) {
+		if (err) {
+			res.status(500).send(err.toString());
+		} else {
+			if (result.rows.length == 0) {
+				res.status(404).send('Joke Not Found!');
+			} else {
+				var articleData = result.rows[0];
+				res.send(createTemplate(articleData));
+			}
+		}
+	});
 });
 
 app.get('/:articleName', function(req, res) {
