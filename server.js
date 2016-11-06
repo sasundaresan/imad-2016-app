@@ -106,6 +106,21 @@ app.get('/hash/:input', function(req, res) {
 	res.send(hashedString);
 });
 
+app.post('/create-user', function(req, res) {
+	var username = req.body.username;
+	var passwd = req.body.passwd;
+	var salt = Crypto.getRandomBytes(128).toString('hex');
+	var dbString = myHashString(passwd, salt);
+	pool.query('INSERT INTO "user" (username, passwd) VALUES $1, $2', [username, dbString], function(err, res) {
+		if (err) {
+			res.status(500).send(err.toString());
+		}
+		else {
+			res.send('User ' + username + ' successfully created');
+		}
+	});
+});
+
 var countBtnNo=0;
 app.get('/counter', function(req, res) {
     countBtnNo++;
