@@ -1,7 +1,10 @@
 var express = require('express');
 var morgan = require('morgan');
 var path = require('path');
+// For SQL Queries
 var Pool = require('pg').Pool;
+// For cryptography - node.js - crypto lib
+var Crypto = require('crypto');
 
 var config = {
 	user: 'sasundaresan',
@@ -88,6 +91,19 @@ function createTemplate(data) {
 
 app.get('/', function (req, res) {
   res.sendFile(path.join(__dirname, 'ui', 'index.html'));
+});
+
+// password hashing
+function myHashString(input, salt) {
+	// use crypto's function to hash
+	var hashed = crypto.pbkdf2Sync(input, salt, 10000, 512, 'sha512');
+	// hashed will be bytes - convert it to string.
+	return hashed.toString('hex');
+}
+
+app.get('/hash/:input', function(req, res) {
+	var hashedString = myHashString(req.params.input, 'this-is-some-random-string');
+	res.send(hashedString);
 });
 
 var countBtnNo=0;
