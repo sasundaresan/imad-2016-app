@@ -11,6 +11,8 @@ var config = {
 	password: process.env.DB_PASSWORD
 };
 
+var pool = new Pool(config);
+
 var app = express();
 app.use(morgan('combined'));
 
@@ -18,7 +20,7 @@ var articles = {
 	'article-one': {
 		title: 'Joke One!',
 		heading: 'Joke One on One',
-		articledate: '2016-10-10',
+		articledate: Date(2011,10,5),
 		content: `<P>Never put off until tomorrow what you can avoid altogether.
 		<P>An answering machine message "The number you have dialed is imaginary. Please rotate your phone 90 degrees and try again."`,
 		picture: '/ui/D_JargonWally2.gif'
@@ -101,7 +103,7 @@ app.get('/submit-comment', function(req, res) {
 });
 
 app.get('/jokes/:articleName', function(req, res) {
-	Pool.query("SELECT * FROM my_articles WHERE title = $1", [req.params.articleName], function(err, result) {
+	pool.query("SELECT * FROM my_articles WHERE title = $1", [req.params.articleName], function(err, result) {
 		if (err) {
 			res.status(500).send(err.toString());
 		} else {
